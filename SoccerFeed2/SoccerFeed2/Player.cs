@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoccerFeed2
 {
-    class Player
+    public class Player
     {
         public string Name { get; private set; }
         public string Number { get; private set; }
@@ -20,6 +20,14 @@ namespace SoccerFeed2
             this.Position = pos;
             //this.id = id;
             //hasPlayed = false;
+        }
+
+        public Player(string name, string number, string pos, string team)
+        {
+            this.Name = name;
+            this.Number = number;
+            this.Position = pos;
+            this.Team = team; 
         }
     }
 }
