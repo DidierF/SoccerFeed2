@@ -35,19 +35,16 @@ namespace SoccerFeed2
             Team2Players.ReadOnly = true;
             Team2Players.BackColor = System.Drawing.SystemColors.Window;
 
-            //cnb = new SqlConnectionStringBuilder("Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\\Database\\SFDataBase.mdf;Integrated Security=True");
-            //cnb.MaxPoolSize = 2;
-
-            //teams = new List<Team>();
+            teams = new List<Team>();
 
             teams = new DataBaseInterface().GetTeams();
 
             this.Date.Text = System.DateTime.Now.ToString();
-            //foreach (Team t in teams)
-            //{
-            //    home.Items.Add(t.Name);
-            //    away.Items.Add(t.Name);
-            //}
+            foreach (Team t in teams)
+            {
+                home.Items.Add(t.Name);
+                away.Items.Add(t.Name);
+            }
         }
 
         

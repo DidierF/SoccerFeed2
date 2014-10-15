@@ -8,18 +8,15 @@ namespace SoccerFeed2
 {
     class Team
     {
-        public Player[] Members;
+        public List<Player> Members;
         public string Name;
         public string Stadium;
-        public Player[] inGamePlayers;
-        private string teamName;
-        private string p;
+        public List<Player> inGamePlayers;
 
-        public Team(string teamName, string p)
+        public Team(string name, string std)
         {
-            // TODO: Complete member initialization
-            this.teamName = teamName;
-            this.p = p;
+            Name = name;
+            Stadium = std;
         }
     }
 }
