@@ -47,8 +47,6 @@ namespace SoccerFeed2
             }
         }
 
-        
-
         private void home_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;

@@ -27,7 +27,6 @@ namespace SoccerFeed2
             Annotations.Add(annotation);
             if (annotation.motive == 0) Goal(annotation);
             if (annotation.motive == 4) Substitution(annotation); 
-            //something
         }
 
         private void Goal(Annotation annotation)

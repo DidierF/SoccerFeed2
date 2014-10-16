@@ -9,7 +9,39 @@ namespace SoccerFeed2
     public class Annotation
     {
         public int motive;
-        public string Motive;
+        public string Motive
+        {
+            get
+            {
+                switch (motive)
+                {
+                    case 0:
+                        return "Goal";
+                    case 1:
+                        return "Foul";
+                    case 2:
+                        return "Red Card";
+                    case 3:
+                        return "Yellow Card";
+                    case 4:
+                        return "Substitution";
+                    case 5:
+                        return "Goal Kick";
+                    case 6:
+                        return "Throw In";
+                    case 7:
+                        return "Corner";
+                    case 8:
+                        return "Offside";
+                    case 9:
+                        return "Free Throw";
+                    case 10:
+                        return "Penalty";
+                    default:
+                        return "Default";
+                }
+            }
+        }
         public Player MainPlayer;
         public DateTime Time;
         public Player AuxPlayer;
@@ -33,7 +65,47 @@ namespace SoccerFeed2
 
         public string toString()
         {
-            return string.Empty;
+            string result = ""; 
+
+            switch (motive)
+            {
+                case 0:
+                    if (AuxPlayer != null)
+                    {
+                        result = "[" + Time + "] " + MainPlayer.Name + " scored a " + Motive + " assisted by " + AuxPlayer.Name;
+                    }
+                    else
+                    {
+                        result = "[" + Time + "] " + MainPlayer.Name + " scored a " + Motive;
+                    }
+                    break;
+                case 1:
+                    result = "[" + Time + "] " + MainPlayer.Name + " performed a " + Motive + " to " + AuxPlayer.Name;
+                    break;
+                case 2:
+                case 3:
+                    result = "[" + Time + "] " + MainPlayer.Name + " received a " + Motive;
+                    break;
+                case 4:
+                    if (AuxPlayer != null)
+                    {
+                        result = "[" + Time + "]" + MainPlayer.Name + " was replaced by " + AuxPlayer.Name;
+                    }
+                    break;
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                    result = "[" + Time + "] " + MainPlayer.Name + " performed a " + Motive;
+                    break;
+                default:
+                    result = "Default motive string";
+                    break;
+
+            }
+            return result;
         }
     }
 }
