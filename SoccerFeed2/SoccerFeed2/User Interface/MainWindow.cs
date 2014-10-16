@@ -7,23 +7,14 @@ namespace SoccerFeed2
 {
     public partial class MainWindow : Form
     {
-        private Game game;
-        private DateTime currentTime;
-        private TimeSpan actualTime;
-        private Player mainPlayer, auxPlayer; 
-        private int annotationMotive; 
+        public Game Game { get; private set; }
+        public DateTime currentTime { get; private set; }
+        public TimeSpan actualTime { get; private set; }
+        public Player mainPlayer{ get; private set; }
+        public Player auxPlayer{ get; private set; }
+        public int annotationMotive { get; private set; }
 
-        public Game Game
-        {
-            get { return game; }
-            set
-            {
-                if (game == null)
-                {
-                    game = value;
-                }
-            }
-        }
+        //TODO: Extract logic to another class!
 
         public MainWindow(Game gm)
         {
@@ -33,8 +24,8 @@ namespace SoccerFeed2
             annotationHistory.ReadOnly = true;
             annotationHistory.BackColor = System.Drawing.SystemColors.Window;
             this.Game = gm;
-            team1Check.Text = game.HomeTeam.Name;
-            team2Check.Text = game.AwayTeam.Name;
+            team1Check.Text = Game.HomeTeam.Name;
+            team2Check.Text = Game.AwayTeam.Name;
             currentTime = new DateTime();
 
             playComboBox.Items.AddRange(new string[] 
@@ -46,7 +37,7 @@ namespace SoccerFeed2
             annotationHistory.Update(); 
             timer1.Interval = 1000; 
             timer1.Start();
-            DisplayAnnotations(game.ID);
+            DisplayAnnotations(Game.ID);
         }
 
         private void DisplayAnnotations(int gameID)
@@ -55,7 +46,7 @@ namespace SoccerFeed2
 
             foreach (Annotation a in anns)
             {
-                game.addAnnotation(a);
+                Game.addAnnotation(a);
                 annotationHistory.AppendText(a.ToString() + "\n");
                 UpdateScore(a);
             }
@@ -66,8 +57,8 @@ namespace SoccerFeed2
 
             if (a.Motive == "Goal")
             {
-                team1Score.Text = game.Score[0].ToString();
-                team2Score.Text = game.Score[1].ToString();
+                team1Score.Text = Game.Score[0].ToString();
+                team2Score.Text = Game.Score[1].ToString();
             }
             team1Score.Update();
             team2Score.Update();
@@ -79,7 +70,7 @@ namespace SoccerFeed2
             {
                 playerComboBox.Text = "";
                 playerComboBox.Items.Clear();
-                foreach (Player p in game.HomeTeam.InGamePlayers)
+                foreach (Player p in Game.HomeTeam.InGamePlayers)
                 {
                     playerComboBox.Items.Add(p.Name);
                 }
@@ -92,7 +83,7 @@ namespace SoccerFeed2
             {
                 playerComboBox.Text = "";
                 playerComboBox.Items.Clear();
-                foreach (Player p in game.AwayTeam.InGamePlayers)
+                foreach (Player p in Game.AwayTeam.InGamePlayers)
                 {
                     playerComboBox.Items.Add(p.Name);
                 }
@@ -104,13 +95,13 @@ namespace SoccerFeed2
             if (!(playerComboBox.SelectedItem == null || playComboBox.SelectedItem == null) && 
                 !(auxComboBox.Enabled && auxComboBox.SelectedItem == null && playComboBox.SelectedIndex != 0))
             {
-            DateTime currentTime = game.StartTime.Add(actualTime);
+            DateTime currentTime = Game.StartTime.Add(actualTime);
             int motive = playComboBox.SelectedIndex;
             int newID = new DataBaseInterface().GetNewAnnotationID();
             Annotation ann = new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive, newID);
 
-            game.addAnnotation(ann);
-            new DataBaseInterface().SaveAnnotation(ann, game);
+            Game.addAnnotation(ann);
+            new DataBaseInterface().SaveAnnotation(ann, Game);
 
             annotationHistory.AppendText(ann.ToString() + "\n");
             annotationHistory.Update();
@@ -153,11 +144,11 @@ namespace SoccerFeed2
                     auxComboBox.Enabled = true;
                     if (team1Check.Checked)
                     {
-                        players = game.HomeTeam.InGamePlayers;
+                        players = Game.HomeTeam.InGamePlayers;
                     }
                     else if (team2Check.Checked)
                     {
-                        players = game.AwayTeam.InGamePlayers;
+                        players = Game.AwayTeam.InGamePlayers;
                     }
                     break;
                 case 1:
@@ -165,11 +156,11 @@ namespace SoccerFeed2
                     auxComboBox.Enabled = true;
                     if (team1Check.Checked)
                     {
-                        players = game.AwayTeam.InGamePlayers;
+                        players = Game.AwayTeam.InGamePlayers;
                     }
                     else if (team2Check.Checked)
                     {
-                        players = game.HomeTeam.InGamePlayers;
+                        players = Game.HomeTeam.InGamePlayers;
                     }
                     break;
                 case 4:
@@ -177,11 +168,11 @@ namespace SoccerFeed2
                     auxComboBox.Enabled = true;
                     if (team1Check.Checked)
                     {
-                        players = game.HomeTeam.AvailablePlayers;
+                        players = Game.HomeTeam.AvailablePlayers;
                     }
                     else if (team2Check.Checked)
                     {
-                        players = game.AwayTeam.AvailablePlayers;
+                        players = Game.AwayTeam.AvailablePlayers;
                     }
                     break;
             }
@@ -196,7 +187,7 @@ namespace SoccerFeed2
         private void timer1_Tick(object sender, EventArgs e)
         {
            currentTime = System.DateTime.Now; 
-           actualTime = currentTime.Subtract(game.StartTime);
+           actualTime = currentTime.Subtract(Game.StartTime);
            time.Text = actualTime.Minutes + ":" + actualTime.Seconds;  
         }
 
@@ -209,31 +200,31 @@ namespace SoccerFeed2
                 case 0: 
                     if(team1Check.Checked)
                     {
-                        this.auxPlayer = game.HomeTeam.InGamePlayers[auxCB.SelectedIndex]; 
+                        this.auxPlayer = Game.HomeTeam.InGamePlayers[auxCB.SelectedIndex]; 
                     }
                     if(team2Check.Checked)
                     {
-                        this.auxPlayer = game.AwayTeam.InGamePlayers[auxCB.SelectedIndex];
+                        this.auxPlayer = Game.AwayTeam.InGamePlayers[auxCB.SelectedIndex];
                     }
                     break; 
                 case 1:
                     if(team1Check.Checked)
                     {
-                        this.auxPlayer = game.AwayTeam.InGamePlayers[auxCB.SelectedIndex]; 
+                        this.auxPlayer = Game.AwayTeam.InGamePlayers[auxCB.SelectedIndex]; 
                     }
                     if (team2Check.Checked)
                     {
-                        this.auxPlayer = game.HomeTeam.InGamePlayers[auxCB.SelectedIndex]; 
+                        this.auxPlayer = Game.HomeTeam.InGamePlayers[auxCB.SelectedIndex]; 
                     }
                     break;
                 case 4:
                     if(team1Check.Checked)
                     {
-                        this.auxPlayer = game.HomeTeam.AvailablePlayers[auxCB.SelectedIndex];
+                        this.auxPlayer = Game.HomeTeam.AvailablePlayers[auxCB.SelectedIndex];
                     }
                     if(team2Check.Checked)
                     {
-                        this.auxPlayer = game.AwayTeam.AvailablePlayers[auxCB.SelectedIndex]; 
+                        this.auxPlayer = Game.AwayTeam.AvailablePlayers[auxCB.SelectedIndex]; 
                     }
                     break;
                 default:
@@ -245,11 +236,11 @@ namespace SoccerFeed2
         {
             if (team1Check.Checked)
             {
-                this.mainPlayer = game.HomeTeam.InGamePlayers[playerComboBox.SelectedIndex];
+                this.mainPlayer = Game.HomeTeam.InGamePlayers[playerComboBox.SelectedIndex];
             }
             else
             {
-                this.mainPlayer = game.AwayTeam.InGamePlayers[playerComboBox.SelectedIndex];
+                this.mainPlayer = Game.AwayTeam.InGamePlayers[playerComboBox.SelectedIndex];
             }
         }
 
@@ -259,17 +250,17 @@ namespace SoccerFeed2
             {
                 mainPlayer.HasPlayed = false;
                 auxPlayer.HasPlayed = true; 
-                game.HomeTeam.InGamePlayers.Add(auxPlayer);
-                game.HomeTeam.InGamePlayers.Remove(mainPlayer);
-                game.HomeTeam.AvailablePlayers.Add(mainPlayer);
-                game.HomeTeam.AvailablePlayers.Remove(auxPlayer);
+                Game.HomeTeam.InGamePlayers.Add(auxPlayer);
+                Game.HomeTeam.InGamePlayers.Remove(mainPlayer);
+                Game.HomeTeam.AvailablePlayers.Add(mainPlayer);
+                Game.HomeTeam.AvailablePlayers.Remove(auxPlayer);
                 playerComboBox.Items.Clear();
                 auxComboBox.Items.Clear();
-                foreach (Player p in game.HomeTeam.InGamePlayers)
+                foreach (Player p in Game.HomeTeam.InGamePlayers)
                 {
                     playerComboBox.Items.Add(p.Name);
                 }
-                foreach (Player p in game.HomeTeam.AvailablePlayers)
+                foreach (Player p in Game.HomeTeam.AvailablePlayers)
                 {
                     auxComboBox.Items.Add(p.Name);
                 }
@@ -277,17 +268,17 @@ namespace SoccerFeed2
             {
                 mainPlayer.HasPlayed = false;
                 auxPlayer.HasPlayed = true; 
-                game.AwayTeam.InGamePlayers.Add(auxPlayer);
-                game.AwayTeam.InGamePlayers.Remove(mainPlayer);
-                game.AwayTeam.AvailablePlayers.Add(mainPlayer);
-                game.AwayTeam.AvailablePlayers.Remove(auxPlayer);
+                Game.AwayTeam.InGamePlayers.Add(auxPlayer);
+                Game.AwayTeam.InGamePlayers.Remove(mainPlayer);
+                Game.AwayTeam.AvailablePlayers.Add(mainPlayer);
+                Game.AwayTeam.AvailablePlayers.Remove(auxPlayer);
                 playerComboBox.Items.Clear();
                 auxComboBox.Items.Clear();
-                foreach (Player p in game.AwayTeam.InGamePlayers)
+                foreach (Player p in Game.AwayTeam.InGamePlayers)
                 {
                     playerComboBox.Items.Add(p.Name);
                 }
-                foreach (Player p in game.AwayTeam.AvailablePlayers)
+                foreach (Player p in Game.AwayTeam.AvailablePlayers)
                 {
                     auxComboBox.Items.Add(p.Name);
                 }

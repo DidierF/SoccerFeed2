@@ -8,7 +8,7 @@ namespace SoccerFeed2
 {
     public class Annotation
     {
-        private int motive;
+        public int motive { get; private set; }
         public string Motive
         {
             get
@@ -107,6 +107,24 @@ namespace SoccerFeed2
 
             }
             return result;
+        }
+
+        internal static void GetPossibleMotives(string[] allMotives)
+        {
+            if (allMotives.Length >= 11)
+            {
+                allMotives[0] = "Goal";
+                allMotives[1] = "Foul";
+                allMotives[2] = "Red Card";
+                allMotives[3] = "Yellow Card";
+                allMotives[4] = "Substitution";
+                allMotives[5] = "Goal Kick";
+                allMotives[6] = "Throw In";
+                allMotives[7] = "Corner";
+                allMotives[8] = "Offside";
+                allMotives[9] = "Free Throw";
+                allMotives[10] = "Penalty";
+            }
         }
     }
 }
