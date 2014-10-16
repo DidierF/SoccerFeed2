@@ -17,7 +17,13 @@ namespace SoccerFeed2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new StartWindow());
+
+            StartWindow startW = new StartWindow();
+            
+            if (startW.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new MainWindow(startW.NewGame));
+            }
         }
     }
 }

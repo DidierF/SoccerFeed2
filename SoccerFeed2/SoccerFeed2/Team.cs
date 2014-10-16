@@ -11,16 +11,17 @@ namespace SoccerFeed2
         public List<Player> Members; 
         public string Name;
         public string Stadium;
-        public List<Player> inGamePlayers;
-        public List<Player> availablePlayers;
+        //TODO: Getters for InGamePlayers and Available Players;
+        public List<Player> InGamePlayers;
+        public List<Player> AvailablePlayers;
 
         public Team(string name, string std)
         {
             Name = name;
             Stadium = std;
             Members = new List<Player>(); 
-            inGamePlayers = new List<Player>();
-            availablePlayers = new List<Player>();
+            InGamePlayers = new List<Player>();
+            AvailablePlayers = new List<Player>();
             DefaultMembers();
  
         }
@@ -31,8 +32,8 @@ namespace SoccerFeed2
 
             foreach (Player player in Members)
             {
-                if (i < 11) inGamePlayers.Add(Members[i]);
-                if (i >= 11) availablePlayers.Add(Members[i]);
+                if (i < 11) InGamePlayers.Add(Members[i]);
+                if (i >= 11) AvailablePlayers.Add(Members[i]);
                 i++;
             }
         }

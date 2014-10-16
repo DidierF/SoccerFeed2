@@ -13,6 +13,7 @@ namespace SoccerFeed2
         public string Position { get; private set; }
         public string Team { get; private set; }
         public int ID { get; private set; }
+        public bool HasPlayed { get; set; }
 
         public Player(string name, string number, string pos, string team, int id)
         {
@@ -21,7 +22,7 @@ namespace SoccerFeed2
             this.Position = pos;
             this.Team = team;
             this.ID = id;
-            //hasPlayed = false;
+            HasPlayed = false;
         }
     }
 }

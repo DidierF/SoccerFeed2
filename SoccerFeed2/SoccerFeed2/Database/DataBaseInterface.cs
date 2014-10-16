@@ -80,7 +80,7 @@ namespace SoccerFeed2.Database
             return p;
         }
 
-        public void SaveGame()
+        public void SaveGame(Game g)
         {
             throw new NotImplementedException();
         }
@@ -118,7 +118,7 @@ namespace SoccerFeed2.Database
             return games;
         }
 
-        public void SaveAnnoation(Annotation n, Game g)
+        public void SaveAnnotation(Annotation n, Game g)
         {
             SqlConnection connection = new SqlConnection(csb.ConnectionString);
 
@@ -155,7 +155,7 @@ namespace SoccerFeed2.Database
             }
         }
 
-        public List<Annotation> GetAnnoations()
+        public List<Annotation> GetAnnotations(int GameID)
         {
             throw new NotImplementedException();
         }

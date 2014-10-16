@@ -9,13 +9,13 @@ namespace SoccerFeed2.Database
     interface IDataBase
     {
         List<Team> GetTeams();
-        void SaveGame();
+        void SaveGame(Game g);
         List<Game> GetAllGames();
         Game GetGame(int GameID);
         List<Team> GetGameTeams(int GameID);
         int GetNewGameID();
-        void SaveAnnoation(Annotation a, Game g);
-        List<Annotation> GetAnnoations();
+        void SaveAnnotation(Annotation a, Game g);
+        List<Annotation> GetAnnotations(int GameID);
         int GetNewAnnotationID();
         Player GetPlayer(int PlayerID);
 

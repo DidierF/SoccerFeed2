@@ -16,7 +16,7 @@ namespace SoccerFeed2
     public partial class StartWindow : Form
     {
         private List<Team> teams;
-        private Game newGame;
+        public Game NewGame { get; private set; }
         //private DataBaseInterface dbI;
         private SqlConnectionStringBuilder cnb;
         //public Game NewGame { get { return newGame; } }
@@ -101,23 +101,23 @@ namespace SoccerFeed2
                 }
             }
 
-            //newGame = new Game(new DataBaseInterface().GetNewGameID(),playingTeams[0], playingTeams[1]);
-            //if (playingTeams[0] != null && playingTeams[1] != null && playingTeams[0] != playingTeams[1])
-            //{
-            //    dbi.SaveGame(newGame);
-            //    this.DialogResult = DialogResult.OK;
-            //}
+            NewGame = new Game(new DataBaseInterface().GetNewGameID(), playingTeams[0], playingTeams[1]);
+            if (playingTeams[0] != null && playingTeams[1] != null && playingTeams[0] != playingTeams[1])
+            {
+                dbi.SaveGame(NewGame);
+                this.DialogResult = DialogResult.OK;
+            }
         }
 
         private void OpenBtn_Click(object sender, EventArgs e)
         {
-            //GameOpenWindow openW = new GameOpenWindow();
+            GameOpenWindow openW = new GameOpenWindow();
 
-            //if (openW.ShowDialog() == DialogResult.OK)
-            //{
-            //    newGame = openW.Game;
-            //    this.DialogResult = DialogResult.OK;
-            //}
+            if (openW.ShowDialog() == DialogResult.OK)
+            {
+                NewGame = openW.Game;
+                this.DialogResult = DialogResult.OK;
+            }
         }
         
 

@@ -8,11 +8,13 @@ namespace SoccerFeed2
 {
     public class Game
     {
-        public Team[] Teams { get; private set; }
+        private Team[] Teams;
         public DateTime StartTime { get; private set; }
         public List<Annotation> Annotations { get; private set; }
         public int[] Score { get; private set; }
         public int ID { get; private set; }
+        public Team HomeTeam { get { return Teams[0]; } }
+        public Team AwayTeam { get { return Teams[1]; } }
 
         public Game(int id, Team t1, Team t2)
         {
@@ -45,10 +47,10 @@ namespace SoccerFeed2
 
             if (team != -1)
             {
-                Teams[team].availablePlayers.Add(annotation.MainPlayer);
-                Teams[team].inGamePlayers.Remove(annotation.MainPlayer);
-                Teams[team].inGamePlayers.Add(annotation.AuxPlayer);
-                Teams[team].availablePlayers.Remove(annotation.AuxPlayer);
+                Teams[team].AvailablePlayers.Add(annotation.MainPlayer);
+                Teams[team].InGamePlayers.Remove(annotation.MainPlayer);
+                Teams[team].InGamePlayers.Add(annotation.AuxPlayer);
+                Teams[team].AvailablePlayers.Remove(annotation.AuxPlayer);
             }
         }
     }

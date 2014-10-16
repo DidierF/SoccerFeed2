@@ -118,9 +118,10 @@
             // 
             // Logo
             // 
-            this.Logo.Location = new System.Drawing.Point(177, 13);
+            this.Logo.Image = global::SoccerFeed2.Properties.Resources.SoccerFeedLogo;
+            this.Logo.Location = new System.Drawing.Point(187, 7);
             this.Logo.Name = "Logo";
-            this.Logo.Size = new System.Drawing.Size(100, 50);
+            this.Logo.Size = new System.Drawing.Size(78, 94);
             this.Logo.TabIndex = 0;
             this.Logo.TabStop = false;
             // 
