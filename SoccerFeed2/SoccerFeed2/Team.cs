@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SoccerFeed2.Database;
 
 namespace SoccerFeed2
 {
@@ -19,7 +20,7 @@ namespace SoccerFeed2
         {
             Name = name;
             Stadium = std;
-            Members = new List<Player>(); 
+            Members = new DataBaseInterface().GetPlayers(this.Name); 
             InGamePlayers = new List<Player>();
             AvailablePlayers = new List<Player>();
             DefaultMembers();

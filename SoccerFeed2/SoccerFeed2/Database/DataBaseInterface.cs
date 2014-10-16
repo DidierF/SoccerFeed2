@@ -46,7 +46,7 @@ namespace SoccerFeed2.Database
             return teams;
         }
 
-        private List<Player> GetPlayers(string teamName)
+        public List<Player> GetPlayers(string teamName)
         {
             List<Player> p = new List<Player>();
 

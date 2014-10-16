@@ -38,6 +38,7 @@ namespace SoccerFeed2
             timer1.Interval = 1000; 
             timer1.Start();
             DisplayAnnotations(Game.ID);
+            auxComboBox.Enabled = false; 
         }
 
         private void DisplayAnnotations(int gameID)
@@ -103,14 +104,11 @@ namespace SoccerFeed2
             Game.addAnnotation(ann);
             new DataBaseInterface().SaveAnnotation(ann, Game);
 
-            annotationHistory.AppendText(ann.ToString() + "\n");
-            annotationHistory.Update();
+            annotationHistory.AppendText(ann.toString() + "\n");
+            annotationHistory.Update(); 
             UpdateScore(ann);
+            if (annotationMotive == 4) UpdateTeams(); 
 
-            if (annotationMotive == 4)
-            {
-                substitution(); 
-            }
             playerComboBox.ResetText();
             playComboBox.ResetText();
             auxComboBox.ResetText();
@@ -244,45 +242,14 @@ namespace SoccerFeed2
             }
         }
 
-        private void substitution()
+        private void UpdateTeams()
         {
-            if (team1Check.Checked)
-            {
-                mainPlayer.HasPlayed = false;
-                auxPlayer.HasPlayed = true; 
-                Game.HomeTeam.InGamePlayers.Add(auxPlayer);
-                Game.HomeTeam.InGamePlayers.Remove(mainPlayer);
-                Game.HomeTeam.AvailablePlayers.Add(mainPlayer);
-                Game.HomeTeam.AvailablePlayers.Remove(auxPlayer);
-                playerComboBox.Items.Clear();
-                auxComboBox.Items.Clear();
-                foreach (Player p in Game.HomeTeam.InGamePlayers)
-                {
-                    playerComboBox.Items.Add(p.Name);
-                }
-                foreach (Player p in Game.HomeTeam.AvailablePlayers)
-                {
-                    auxComboBox.Items.Add(p.Name);
-                }
-            } if (team2Check.Checked)
-            {
-                mainPlayer.HasPlayed = false;
-                auxPlayer.HasPlayed = true; 
-                Game.AwayTeam.InGamePlayers.Add(auxPlayer);
-                Game.AwayTeam.InGamePlayers.Remove(mainPlayer);
-                Game.AwayTeam.AvailablePlayers.Add(mainPlayer);
-                Game.AwayTeam.AvailablePlayers.Remove(auxPlayer);
-                playerComboBox.Items.Clear();
-                auxComboBox.Items.Clear();
-                foreach (Player p in Game.AwayTeam.InGamePlayers)
-                {
-                    playerComboBox.Items.Add(p.Name);
-                }
-                foreach (Player p in Game.AwayTeam.AvailablePlayers)
-                {
-                    auxComboBox.Items.Add(p.Name);
-                }
-            }
+            List<Player> updatedTeam = new List<Player>();
+            if (team1Check.Checked) updatedTeam = Game.HomeTeam.InGamePlayers;
+            if (team2Check.Checked) updatedTeam = Game.AwayTeam.InGamePlayers;
+
+            playerComboBox.Items.Clear(); 
+            foreach (Player player in updatedTeam) playerComboBox.Items.Add(player.Name);
         }
     }
 }
