@@ -8,7 +8,7 @@ namespace SoccerFeed2
 {
     public class Annotation
     {
-        public int motive;
+        private int motive;
         public string Motive
         {
             get
@@ -42,25 +42,26 @@ namespace SoccerFeed2
                 }
             }
         }
-        public Player MainPlayer;
-        public DateTime Time;
-        public Player AuxPlayer;
+        public Player MainPlayer { get; private set; }
+        public DateTime Time { get; private set; }
+        public Player AuxPlayer { get; private set; }
+        public int ID { get; private set; }
 
-        public Annotation(DateTime time, Player player, int motive/*, int id*/)
+        public Annotation(DateTime time, Player player, int motive, int id)
         {
             this.Time = time;
             this.MainPlayer = player;
             this.motive = motive;
-            //this.id = id;
+            this.ID = id;
         }
 
-        public Annotation(DateTime time, Player player, Player auxplayer, int motive/*, int id*/)
+        public Annotation(DateTime time, Player player, Player auxplayer, int motive, int id)
         {
             this.Time = time;
             this.MainPlayer = player;
             this.AuxPlayer = auxplayer;
             this.motive = motive;
-            //this.id = id;
+            this.ID = id;
         }
 
         public string toString()

@@ -12,10 +12,11 @@ namespace SoccerFeed2
         public DateTime StartTime { get; private set; }
         public List<Annotation> Annotations { get; private set; }
         public int[] Score { get; private set; }
+        public int ID { get; private set; }
 
-        public Game(/*int id,*/ Team t1, Team t2)
+        public Game(int id, Team t1, Team t2)
         {
-            //this.id = id;
+            this.ID = id;
             Teams = new Team[] { t1, t2 };
             Annotations = new List<Annotation>();
             StartTime = System.DateTime.Now;
@@ -25,13 +26,12 @@ namespace SoccerFeed2
         public void addAnnotation(Annotation annotation)
         {
             Annotations.Add(annotation);
-            if (annotation.motive == 0) Goal(annotation);
-            if (annotation.motive == 4) Substitution(annotation); 
+            if (annotation.Motive.Equals("Goal")) Goal(annotation);
+            if (annotation.Motive.Equals("Substitution")) Substitution(annotation); 
         }
 
         private void Goal(Annotation annotation)
         {
-            //TODO
             if (annotation.MainPlayer.Team == Teams[0].Name) Score[0]++;
             if (annotation.MainPlayer.Team == Teams[1].Name) Score[1]++;
         }

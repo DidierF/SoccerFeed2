@@ -10,7 +10,8 @@ namespace SoccerFeed2.Database
 {
     class DataBaseInterface: IDataBase
     {
-        SqlConnectionStringBuilder csb = new SqlConnectionStringBuilder(Properties.Settings.Default.SFDataBaseConnectionString);
+        SqlConnectionStringBuilder csb = 
+            new SqlConnectionStringBuilder(Properties.Settings.Default.SFDataBaseConnectionString);
 
         public List<Team> GetTeams()
         {
@@ -70,8 +71,8 @@ namespace SoccerFeed2.Database
                     {
                         int n;
                         Int32.TryParse(String.Format("{0}", rdr2[0]), out n);
-                        p.Add(new Player(String.Format("{0}", rdr2[1]),
-                            String.Format("{0}", rdr2[2]), String.Format("{0}", rdr2[3])));
+                        p.Add(new Player(String.Format("{0}", rdr2[1]).Trim(),
+                            String.Format("{0}", rdr2[2]), String.Format("{0}", rdr2[3]), teamName, n));
                     }
                     rdr2.Close();
                 }
@@ -101,12 +102,57 @@ namespace SoccerFeed2.Database
 
         public int GetNewGameID()
         {
-            throw new NotImplementedException();
+            SqlConnection connection = new SqlConnection(csb.ConnectionString);
+            int games = 0;
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.Text;
+                command.CommandText = "select count(gameID) from game";
+
+                connection.Open();
+                games = (int)command.ExecuteScalar();
+
+            }
+            return games;
         }
 
-        public void SaveAnnoation(Annotation a)
+        public void SaveAnnoation(Annotation n, Game g)
         {
-            throw new NotImplementedException();
+            SqlConnection connection = new SqlConnection(csb.ConnectionString);
+
+            using (connection)
+            {
+                connection.Open();
+                string query;
+                if (n.AuxPlayer != null)
+                {
+                    query = "insert annotation (ID, Motive, Time, Game, MainPlayerID, AuxPlayerID)" +
+                        "values (@ID, @Motive, convert(datetime, @date, 103), @gameID, @playerID, @auxPlayerID)";
+                }
+                else
+                {
+                    query = "insert annotation (ID, Motive, Time, Game, MainPlayerID)"
+                    + "values (@ID, @Motive, convert(datetime, @date, 103), @gameID, @playerID)";
+                }
+
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.CommandType = CommandType.Text;
+
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@ID", n.ID);
+                cmd.Parameters.AddWithValue("@Motive", n.Motive);
+                cmd.Parameters.AddWithValue("@date", n.Time.ToString("hh:mm:ss"));
+                cmd.Parameters.AddWithValue("@gameID", g.ID);
+                cmd.Parameters.AddWithValue("@playerID", n.MainPlayer.ID);
+                if (n.AuxPlayer != null)
+                {
+                    cmd.Parameters.AddWithValue("@auxPlayerID", n.AuxPlayer.ID);
+                }
+
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public List<Annotation> GetAnnoations()
@@ -116,7 +162,20 @@ namespace SoccerFeed2.Database
 
         public int GetNewAnnotationID()
         {
-            throw new NotImplementedException();
+            SqlConnection connection = new SqlConnection(csb.ConnectionString);
+            int annotations = 0;
+            using (connection)
+            {
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.Text;
+                command.CommandText = "select count(ID) from Annotation";
+
+                connection.Open();
+                annotations = (int)command.ExecuteScalar();
+
+            }
+            return annotations;
         }
 
         public Player GetPlayer(int PlayerID)

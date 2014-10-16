@@ -12,22 +12,16 @@ namespace SoccerFeed2
         public string Number { get; private set; }
         public string Position { get; private set; }
         public string Team { get; private set; }
+        public int ID { get; private set; }
 
-        public Player(string name, string number, string pos/*, int id*/)
+        public Player(string name, string number, string pos, string team, int id)
         {
             this.Name = name;
             this.Number = number;
             this.Position = pos;
-            //this.id = id;
+            this.Team = team;
+            this.ID = id;
             //hasPlayed = false;
-        }
-
-        public Player(string name, string number, string pos, string team)
-        {
-            this.Name = name;
-            this.Number = number;
-            this.Position = pos;
-            this.Team = team; 
         }
     }
 }
