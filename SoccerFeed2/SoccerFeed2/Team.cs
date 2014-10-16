@@ -36,7 +36,21 @@ namespace SoccerFeed2
             Name = name;
             Stadium = std;
             inGamePlayers = new List<Player>();
-            availablePlayers = new List<Player>(); 
+            availablePlayers = new List<Player>();
+            Defaultmembers();
+ 
+        }
+
+        public void DefaultMembers()
+        {
+            int i = 0;
+
+            foreach (Player player in Members)
+            {
+                if (i < 11) inGamePlayers.Add(Members[i]);
+                if (i >= 11) availablePlayers.Add(Members[i]);
+                i++;
+            }
         }
     }
 }
