@@ -37,17 +37,16 @@ namespace SoccerFeed2
             annotationHistory.Update(); 
             timer1.Interval = 1000; 
             timer1.Start();
-            DisplayAnnotations(Game.ID);
+            DisplayAnnotations(Game);
             auxComboBox.Enabled = false; 
         }
 
-        private void DisplayAnnotations(int gameID)
+        private void DisplayAnnotations(Game game)
         {
-            List<Annotation> anns = new DataBaseInterface().GetAnnotations(gameID);
+            List<Annotation> anns = game.Annotations;
 
             foreach (Annotation a in anns)
             {
-                Game.addAnnotation(a);
                 annotationHistory.AppendText(a.ToString() + "\n");
                 UpdateScore(a);
             }

@@ -15,7 +15,7 @@ namespace SoccerFeed2.Database
         void GetGameTeams(Team[] teams, int GameID);
         int GetNewGameID();
         void SaveAnnotation(Annotation a, Game g);
-        List<Annotation> GetAnnotations(int GameID);
+        List<Annotation> GetAnnotations(Game g);
         int GetNewAnnotationID();
         Player GetPlayer(int PlayerID);
 

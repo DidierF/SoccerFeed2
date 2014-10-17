@@ -20,19 +20,23 @@ namespace SoccerFeed2
         public Game(Team t1, Team t2)
         {
             ID = new DataBaseInterface().GetNewGameID(); 
-            Teams = new Team[] { t1, t2 };
-            Annotations = new List<Annotation>();
-            StartTime = System.DateTime.Now;
-            Score = new int[] {0, 0}; 
+            Initialize(t1, t2);
+
         }
 
         public Game(int id, Team t1, Team t2)
         {
+            ID = id;
+            Initialize(t1, t2);
+        }
+
+        private void Initialize(Team t1, Team t2)
+        {
+
             Teams = new Team[] { t1, t2 };
-            Annotations = new List<Annotation>();
+            Annotations = new DataBaseInterface().GetAnnotations(this);
             StartTime = System.DateTime.Now;
             Score = new int[] { 0, 0 };
-            ID = id;
         }
 
         public void addAnnotation(Annotation annotation)

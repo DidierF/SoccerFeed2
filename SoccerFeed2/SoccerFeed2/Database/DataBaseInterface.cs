@@ -276,7 +276,7 @@ namespace SoccerFeed2.Database
             }
         }
 
-        public List<Annotation> GetAnnotations(int GameID)
+        public List<Annotation> GetAnnotations(Game game)
         {
             List<Annotation> annotations = new List<Annotation>();
 
@@ -290,7 +290,7 @@ namespace SoccerFeed2.Database
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@gameID", GameID);
+                cmd.Parameters.AddWithValue("@gameID", game.ID);
 
                 SqlDataReader rdr = cmd.ExecuteReader();
 
