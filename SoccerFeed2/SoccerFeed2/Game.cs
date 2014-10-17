@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SoccerFeed2.Database; 
 
 namespace SoccerFeed2
 {
@@ -16,13 +17,21 @@ namespace SoccerFeed2
         public Team HomeTeam { get { return Teams[0]; } }
         public Team AwayTeam { get { return Teams[1]; } }
 
-        public Game(int id, Team t1, Team t2)
+        public Game(Team t1, Team t2)
         {
-            this.ID = id;
+            ID = new DataBaseInterface().GetNewGameID(); 
             Teams = new Team[] { t1, t2 };
             Annotations = new List<Annotation>();
             StartTime = System.DateTime.Now;
             Score = new int[] {0, 0}; 
+        }
+
+        public Game(int id, Team t1, Team t2)
+        {
+            Teams = new Team[] { t1, t2 };
+            Annotations = new List<Annotation>();
+            StartTime = System.DateTime.Now;
+            Score = new int[] { 0, 0 }; 
         }
 
         public void addAnnotation(Annotation annotation)

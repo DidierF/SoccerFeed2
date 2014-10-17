@@ -101,7 +101,7 @@ namespace SoccerFeed2
                 }
             }
 
-            NewGame = new Game(new DataBaseInterface().GetNewGameID(), playingTeams[0], playingTeams[1]);
+            NewGame = new Game(playingTeams[0], playingTeams[1]);
             if (playingTeams[0] != null && playingTeams[1] != null && playingTeams[0] != playingTeams[1])
             {
                 dbi.SaveGame(NewGame);
