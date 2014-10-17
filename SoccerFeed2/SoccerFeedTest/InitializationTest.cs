@@ -14,7 +14,7 @@ namespace SoccerFeedTest
             DateTime time = new DateTime();
             Player testPlayer = new Player("Test", "1", "GK", "Test Team", 1);
             Annotation testAnnotation = new Annotation(time, testPlayer, 0, 1); 
-            Assert.AreEqual("[" + time + "] Test scored a Goal", testAnnotation.ToString()); 
+            Assert.AreEqual("[" + time.TimeOfDay + "] Test scored a Goal", testAnnotation.ToString()); 
         }
 
         [TestMethod]
