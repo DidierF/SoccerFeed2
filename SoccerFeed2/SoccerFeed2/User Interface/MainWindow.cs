@@ -104,7 +104,7 @@ namespace SoccerFeed2
             Game.addAnnotation(ann);
             new DataBaseInterface().SaveAnnotation(ann, Game);
 
-            annotationHistory.AppendText(ann.toString() + "\n");
+            annotationHistory.AppendText(ann.ToString() + "\n");
             annotationHistory.Update(); 
             UpdateScore(ann);
             if (annotationMotive == 4) UpdateTeams(); 

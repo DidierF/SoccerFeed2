@@ -299,14 +299,14 @@ namespace SoccerFeed2.Database
                 {
                     while (rdr.Read())
                     {
-                        if (rdr.IsDBNull(5))
+                        if (rdr.IsDBNull(4))
                         {
-                            annotations.Add(new Annotation(rdr.GetDateTime(6), GetPlayer(rdr.GetInt32(4)),
+                            annotations.Add(new Annotation(rdr.GetDateTime(5), GetPlayer(rdr.GetInt32(3)),
                                 GetMotiveInt(string.Format("{0}", rdr[1]).Trim()), rdr.GetInt32(0)));
                         }
                         else
                         {
-                            annotations.Add(new Annotation(rdr.GetDateTime(6), GetPlayer(rdr.GetInt32(4)), GetPlayer(rdr.GetInt32(5)),
+                            annotations.Add(new Annotation(rdr.GetDateTime(5), GetPlayer(rdr.GetInt32(3)), GetPlayer(rdr.GetInt32(4)),
                                 GetMotiveInt(string.Format("{0}", rdr[1]).Trim()), rdr.GetInt32(0)));
                         }
 

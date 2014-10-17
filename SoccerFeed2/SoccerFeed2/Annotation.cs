@@ -64,7 +64,7 @@ namespace SoccerFeed2
             this.ID = id;
         }
 
-        public string toString()
+        public string ToString()
         {
             string result = ""; 
 
