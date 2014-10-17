@@ -31,7 +31,8 @@ namespace SoccerFeed2
             Teams = new Team[] { t1, t2 };
             Annotations = new List<Annotation>();
             StartTime = System.DateTime.Now;
-            Score = new int[] { 0, 0 }; 
+            Score = new int[] { 0, 0 };
+            ID = id;
         }
 
         public void addAnnotation(Annotation annotation)

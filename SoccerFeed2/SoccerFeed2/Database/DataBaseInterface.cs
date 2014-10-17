@@ -168,8 +168,8 @@ namespace SoccerFeed2.Database
                 TeamsCommand.CommandType = CommandType.Text;
 
                 TeamsCommand.Parameters.Clear();
-                TeamsCommand.Parameters.AddWithValue("@PlayerID", gameID.ToString());
-                TeamsCommand.CommandText = "select * from GameTeam where GameID = @PlayerID";
+                TeamsCommand.Parameters.AddWithValue("@gameID", gameID.ToString());
+                TeamsCommand.CommandText = "select * from GameTeam where GameID = @gameID";
 
                 SqlDataReader reader = TeamsCommand.ExecuteReader();
 
