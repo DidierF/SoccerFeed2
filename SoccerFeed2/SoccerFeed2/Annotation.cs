@@ -64,33 +64,33 @@ namespace SoccerFeed2
             this.ID = id;
         }
 
-        public string ToString()
+        
+        public override string ToString()
         {
-            string result = ""; 
-
+            string result = "";
             switch (motive)
             {
                 case 0:
                     if (AuxPlayer != null)
                     {
-                        result = "[" + Time + "] " + MainPlayer.Name + " scored a " + Motive + " assisted by " + AuxPlayer.Name;
+                        result = "[" + Time.TimeOfDay + "] " + MainPlayer.Name + " scored a " + Motive + " assisted by " + AuxPlayer.Name;
                     }
                     else
                     {
-                        result = "[" + Time + "] " + MainPlayer.Name + " scored a " + Motive;
+                        result = "[" + Time.TimeOfDay + "] " + MainPlayer.Name + " scored a " + Motive;
                     }
                     break;
                 case 1:
-                    result = "[" + Time + "] " + MainPlayer.Name + " performed a " + Motive + " to " + AuxPlayer.Name;
+                    result = "[" + Time.TimeOfDay + "] " + MainPlayer.Name + " performed a " + Motive + " to " + AuxPlayer.Name;
                     break;
                 case 2:
                 case 3:
-                    result = "[" + Time + "] " + MainPlayer.Name + " received a " + Motive;
+                    result = "[" + Time.TimeOfDay + "] " + MainPlayer.Name + " received a " + Motive;
                     break;
                 case 4:
                     if (AuxPlayer != null)
                     {
-                        result = "[" + Time + "]" + MainPlayer.Name + " was replaced by " + AuxPlayer.Name;
+                        result = "[" + Time.TimeOfDay + "]" + MainPlayer.Name + " was replaced by " + AuxPlayer.Name;
                     }
                     break;
                 case 5:
@@ -99,7 +99,7 @@ namespace SoccerFeed2
                 case 8:
                 case 9:
                 case 10:
-                    result = "[" + Time + "] " + MainPlayer.Name + " performed a " + Motive;
+                    result = "[" + Time.TimeOfDay + "] " + MainPlayer.Name + " performed a " + Motive;
                     break;
                 default:
                     result = "Default motive string";
